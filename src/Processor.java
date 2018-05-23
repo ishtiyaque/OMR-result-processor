@@ -20,7 +20,7 @@ public class Processor {
 			while(sc.hasNext()) {
 				
 				String line = sc.nextLine();
-				Result result =  parse(line);
+				Result result =  processSingleLine(line);
 				System.out.println(result);
 				Configuration.dao.insertResult(result);
 				break;
@@ -35,41 +35,63 @@ public class Processor {
 		
 	}
 
-	private Result parse(String line) {
+	private Result processSingleLine(String line) {
 		// TODO Auto-generated method stub
 		int i;
 		int correct = 0; 
 		int incorrect = 0; 
 		int unanswered = 0;
-		int length ;
 		
 		float marks = 0;
 		
-		String rollNo = "12345678";
-		String setcode = "01";
-		String givenAnswer = "BC ADBCBDBDBD BCBCBAADBADACABABCBCADACBCCBDACACBDBACADBDBCACDCBCBCBDBCBCBBCBCBCBCBDADACBBADCBDBDBBDA";
+		Result result = parse(line);
 		
-		String correctAnswer = Configuration.codeAnswerMap.getOrDefault(setcode,null);
+		String correctAnswer = Configuration.codeAnswerMap.getOrDefault(result.getSetCode(),null);
 		
 		if(correctAnswer==null) {
 			System.out.println("No correct Answer");
 		}
-		else {
-			length = givenAnswer.length();			
-			for(i=0;i<length;i++) {
-				if(givenAnswer.charAt(i)==correctAnswer.charAt(i)) {
+		else {			
+			for(i=0;i<result.getGivenAnswer().length();i++) {
+				if(result.getGivenAnswer().charAt(i) == correctAnswer.charAt(i)) {
 					correct++;
 				}
-				else if (givenAnswer.charAt(i)==' ') {
+				else if (result.getGivenAnswer().charAt(i) == ' ') {
 					unanswered++;
 				}
 				else incorrect++;
 			}
 			marks = correct * Configuration.corrrectWeight - incorrect * Configuration.incorrecWeight;
 		}
-		Result result = new Result(rollNo, givenAnswer, Configuration.examType, setcode, marks, correct, incorrect, unanswered);
+		
+		result.setCorrect(correct);
+		result.setIncorrect(incorrect);
+		result.setUnanswered(unanswered);
+		result.setMark(marks);
 		
 		return result;
+	}
+	
+	private Result parse(String line) {
+		
+		Result result = new Result();
+		
+		/***************To be populated by parsing in future**********************/
+		
+		String rollNo = "12345678";
+		String setCode = "01";
+		String givenAnswer = "BC ADBCBDBDBD BCBCBAADBADACABABCBCADACBCCBDACACBDBACADBDBCACDCBCBCBDBCBCBBCBCBCBCBDADACBBADCBDBDBBDA";
+		String examType = Configuration.examType;
+		
+		/*************************************************************************/
+		
+		result.setRollNo(rollNo);
+		result.setSetCode(setCode);
+		result.setGivenAnswer(givenAnswer);
+		result.setExamType(examType);
+		
+		return result;
+		
 	}
 	
 }
