@@ -176,25 +176,22 @@ public class MySQLAccess {
     		
 			preparedStatement = connect
 			        .prepareStatement("insert into  result(roll_no, marks,exam_type) values (?,?,?)");
-			preparedStatement.setString(1, result.rollNo);
-	        preparedStatement.setFloat(2, result.mark);
-	        preparedStatement.setString(3, result.examType);
+			preparedStatement.setString(1, result.getRollNo());
+	        preparedStatement.setFloat(2, result.getMark());
+	        preparedStatement.setString(3, result.getExamType());
 	        preparedStatement.executeUpdate();
 	        
 	        preparedStatement = connect
 			        .prepareStatement("insert into  result_details(roll_no, set_code, given_answer, correct, incorrect, unanswered, exam_type) values (?,?,?,?,?,?,?)");
-			preparedStatement.setString(1, result.rollNo);
-	        preparedStatement.setString(2, result.setCode);
-	        preparedStatement.setString(3, result.givenAnswer);
-	        preparedStatement.setInt(4, result.correct);
-	        preparedStatement.setInt(5, result.incorrect);
-	        preparedStatement.setInt(6, result.unanswered);
-	        preparedStatement.setString(7, result.examType);
-	        preparedStatement.executeUpdate();
+			preparedStatement.setString(1, result.getRollNo());
+	        preparedStatement.setString(2, result.getSetCode());
+	        preparedStatement.setString(3, result.getGivenAnswer());
+	        preparedStatement.setInt(4, result.getCorrect());
+	        preparedStatement.setInt(5, result.getIncorrect());
+	        preparedStatement.setInt(6, result.getUnanswered());
+	        preparedStatement.setString(7, result.getExamType());
+	        preparedStatement.executeUpdate();	        
 	        
-	        
-	        
-    		
         } catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

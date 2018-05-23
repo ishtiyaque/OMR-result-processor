@@ -5,13 +5,18 @@ import java.util.Scanner;
 
 public class Configuration {
 
+	public static String databaseName;
+	public static String datFileName;
 	public static String postCode;
 	public static String examType;
-	public static float corrrectWeight = 1,incorrecWeight=0;
-	public static String datFileName;
+	
+	public static float corrrectWeight = 1;
+	public static float incorrecWeight=0;
+	
 	public static HashMap<String, String> codeAnswerMap=new HashMap<>();
+	
 	public static MySQLAccess dao;
-	public static String databaseName;
+	
 	
 	
 	public static void printConfiguration() {

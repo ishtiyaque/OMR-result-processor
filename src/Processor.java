@@ -4,7 +4,8 @@ import java.nio.charset.CodingErrorAction;
 import java.util.Scanner;
 
 public class Processor {
-	String datFileName;
+	
+	private String datFileName;
 
 	public Processor(String datFileName) {
 		
@@ -24,35 +25,37 @@ public class Processor {
 				Configuration.dao.insertResult(result);
 				break;
 			}
+			sc.close();
 			
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
+		} 
 
 		
 	}
 
 	private Result parse(String line) {
 		// TODO Auto-generated method stub
-		int i,j,k;
-		int correct, incorrect, unanswered,length;
-		float marks;
+		int i;
+		int correct = 0; 
+		int incorrect = 0; 
+		int unanswered = 0;
+		int length ;
 		
-		correct = incorrect = unanswered = 0;
-		marks = 0;
+		float marks = 0;
+		
 		String rollNo = "12345678";
 		String setcode = "01";
 		String givenAnswer = "BC ADBCBDBDBD BCBCBAADBADACABABCBCADACBCCBDACACBDBACADBDBCACDCBCBCBDBCBCBBCBCBCBCBDADACBBADCBDBDBBDA";
 		
 		String correctAnswer = Configuration.codeAnswerMap.getOrDefault(setcode,null);
+		
 		if(correctAnswer==null) {
 			System.out.println("No correct Answer");
 		}
 		else {
-			length = givenAnswer.length();
-			
-			
+			length = givenAnswer.length();			
 			for(i=0;i<length;i++) {
 				if(givenAnswer.charAt(i)==correctAnswer.charAt(i)) {
 					correct++;
