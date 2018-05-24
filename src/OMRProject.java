@@ -8,8 +8,8 @@ public class OMRProject {
 		Configuration.loadConfiguration(CONF_TXT);
 		//Configuration.printConfiguration();
 		
-		Processor proc = new Processor(Configuration.datFileName);
-		proc.process();
+		Processor processor = new Processor(Configuration.datFileName);
+		processor.process();
 	}
 	
 }

@@ -124,7 +124,6 @@ public class MySQLAccess {
 
 	
     public void insertConfiguration(String postCode, String setcode, String examType, String correctAnswer) {
-		// TODO Auto-generated method stub
         
     	try {
     		
@@ -150,7 +149,6 @@ public class MySQLAccess {
 	}
 
 	private boolean checkConfigurationExist(String postCode, String setcode, String examType) {
-		// TODO Auto-generated method stub
 		
 		try {
 			preparedStatement = connect

@@ -1,6 +1,5 @@
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.nio.charset.CodingErrorAction;
 import java.util.Scanner;
 
 public class Processor {
@@ -36,8 +35,7 @@ public class Processor {
 	}
 
 	private Result processSingleLine(String line) {
-		// TODO Auto-generated method stub
-		int i;
+	
 		int correct = 0; 
 		int incorrect = 0; 
 		int unanswered = 0;
@@ -52,7 +50,7 @@ public class Processor {
 			System.out.println("No correct Answer");
 		}
 		else {			
-			for(i=0;i<result.getGivenAnswer().length();i++) {
+			for(int i=0;i<result.getGivenAnswer().length();i++) {
 				if(result.getGivenAnswer().charAt(i) == correctAnswer.charAt(i)) {
 					correct++;
 				}

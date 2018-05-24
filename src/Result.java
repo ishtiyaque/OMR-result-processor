@@ -16,13 +16,6 @@ public class Result {
 
 	}
 
-	@Override
-	public String toString() {
-		return "Result [studentId=" + rollNo + ", givenAnswer=" + givenAnswer + ", examType=" + examType
-				+ ", setCode=" + setCode + ", mark=" + mark + ", correct=" + correct + ", incorrect=" + incorrect
-				+ ", unanswered=" + unanswered + "]";
-	}
-
 	public Result(String rollNo, String givenAnswer, String examType, String setCode, float mark, int correct,
 			int incorrect, int unanswered) {
 		super();
@@ -98,6 +91,13 @@ public class Result {
 
 	public void setUnanswered(int unanswered) {
 		this.unanswered = unanswered;
+	}
+	
+	@Override
+	public String toString() {
+		return "Result [rollNo=" + rollNo + ", givenAnswer=" + givenAnswer + ", examType=" + examType
+				+ ", setCode=" + setCode + ", mark=" + mark + ", correct=" + correct + ", incorrect=" + incorrect
+				+ ", unanswered=" + unanswered + "]";
 	}
 
 }

@@ -54,6 +54,7 @@ public class Configuration {
 				dao.insertConfiguration(postCode,setcode,examType,correctAnswer);
 				
 			}
+			sc.close();
 			
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
@@ -63,7 +64,6 @@ public class Configuration {
 	}
 
 	private static MySQLAccess createConnection(String databaseName) {
-		// TODO Auto-generated method stub
 		return new MySQLAccess(databaseName);
 	}
 	
