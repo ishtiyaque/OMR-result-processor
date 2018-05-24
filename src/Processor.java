@@ -21,7 +21,7 @@ public class Processor {
 				String line = sc.nextLine();
 				Result result =  processSingleLine(line);
 				System.out.println(result);
-				Configuration.dao.insertResult(result);
+				Configuration.getDao().insertResult(result);
 				break;
 			}
 			sc.close();
@@ -44,7 +44,7 @@ public class Processor {
 		
 		Result result = parse(line);
 		
-		String correctAnswer = Configuration.codeAnswerMap.getOrDefault(result.getSetCode(),null);
+		String correctAnswer = Configuration.getCodeAnswerMap().getOrDefault(result.getSetCode(),null);
 		
 		if(correctAnswer==null) {
 			System.out.println("No correct Answer");
@@ -59,7 +59,7 @@ public class Processor {
 				}
 				else incorrect++;
 			}
-			marks = correct * Configuration.corrrectWeight - incorrect * Configuration.incorrecWeight;
+			marks = correct * Configuration.getCorrrectWeight() - incorrect * Configuration.getIncorrecWeight();
 		}
 		
 		result.setCorrect(correct);
@@ -79,7 +79,7 @@ public class Processor {
 		String rollNo = "12345678";
 		String setCode = "01";
 		String givenAnswer = "BC ADBCBDBDBD BCBCBAADBADACABABCBCADACBCCBDACACBDBACADBDBCACDCBCBCBDBCBCBBCBCBCBCBDADACBBADCBDBDBBDA";
-		String examType = Configuration.examType;
+		String examType = Configuration.getExamType();
 		
 		/*************************************************************************/
 		

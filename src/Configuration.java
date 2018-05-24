@@ -5,36 +5,22 @@ import java.util.Scanner;
 
 public class Configuration {
 
-	public static String databaseName;
-	public static String datFileName;
-	public static String postCode;
-	public static String examType;
+	private static String databaseName;
+	private static String datFileName;
+	private static String postCode;
+	private static String examType;
 	
-	public static float corrrectWeight = 1;
-	public static float incorrecWeight=0;
+	private static float corrrectWeight = 1;
+	private static float incorrecWeight=0;
 	
-	public static HashMap<String, String> codeAnswerMap=new HashMap<>();
+	private static HashMap<String, String> codeAnswerMap;
 	
-	public static MySQLAccess dao;
+	private static MySQLAccess dao;
 	
-	
-	
-	public static void printConfiguration() {
-		
-		System.out.println(datFileName);
-		System.out.println(postCode);
-		System.out.println(examType);
-		
-		for (String  s : codeAnswerMap.keySet()) {
-			System.out.println(s);
-			System.out.println(codeAnswerMap.get(s));
-		}
-		
-	}
 	
 	public static void loadConfiguration(String fileName) {
 		
-		codeAnswerMap.clear();
+		codeAnswerMap=new HashMap<String, String>();
 		
 		try {
 			Scanner sc = new Scanner(new File(fileName));
@@ -63,11 +49,53 @@ public class Configuration {
 		
 	}
 
+	public static String getDatabaseName() {
+		return databaseName;
+	}
+
+	public static String getDatFileName() {
+		return datFileName;
+	}
+
+	public static String getPostCode() {
+		return postCode;
+	}
+
+	public static String getExamType() {
+		return examType;
+	}
+
+	public static float getCorrrectWeight() {
+		return corrrectWeight;
+	}
+
+	public static float getIncorrecWeight() {
+		return incorrecWeight;
+	}
+
+	public static HashMap<String, String> getCodeAnswerMap() {
+		return codeAnswerMap;
+	}
+
+	public static MySQLAccess getDao() {
+		return dao;
+	}
+
 	private static MySQLAccess createConnection(String databaseName) {
 		return new MySQLAccess(databaseName);
 	}
 	
-	
-	
+public static void printConfiguration() {
+		
+		System.out.println(datFileName);
+		System.out.println(postCode);
+		System.out.println(examType);
+		
+		for (String  s : codeAnswerMap.keySet()) {
+			System.out.println(s);
+			System.out.println(codeAnswerMap.get(s));
+		}
+		
+	}
 	
 }

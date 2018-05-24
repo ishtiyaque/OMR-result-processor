@@ -18,7 +18,7 @@ public class Result {
 
 	public Result(String rollNo, String givenAnswer, String examType, String setCode, float mark, int correct,
 			int incorrect, int unanswered) {
-		super();
+
 		this.rollNo = rollNo;
 		this.givenAnswer = givenAnswer;
 		this.examType = examType;
