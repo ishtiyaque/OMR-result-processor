@@ -196,4 +196,42 @@ public class MySQLAccess {
 		}
 	}
 
+	public void insertCandidateInfo(CandidateInfo candidateInfo) {
+		try {
+			preparedStatement = connect
+			        .prepareStatement("INSERT INTO candidate_info(post_code, roll_no, applicant_name, father_name, mother_name, quota) VALUES (?,?,?,?,?,?)");
+			preparedStatement.setString(1, candidateInfo.getPostCode());
+	        preparedStatement.setString(2, candidateInfo.getRollNo());
+	        preparedStatement.setString(3, candidateInfo.getApplicantName());
+	        preparedStatement.setString(4, candidateInfo.getFathersName());
+	        preparedStatement.setString(5, candidateInfo.getMothersName());
+	        preparedStatement.setString(6, candidateInfo.getQuota());
+	        preparedStatement.executeUpdate();
+	        
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+       
+	}
+
+	public boolean isDataLoaded() {
+		try {
+			preparedStatement = connect
+			        .prepareStatement("SELECT COUNT(*) FROM CANDIDATE_INFO");
+			resultSet = preparedStatement.executeQuery();
+			resultSet.first();
+			
+			System.out.println(resultSet.getInt(0));
+			if(resultSet.getInt(0)>0)return true;
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return false;
+	}
+
 }
