@@ -26,6 +26,15 @@ public class Processor {
 			}
 			sc.close();
 			
+			sc = new Scanner(new File("duplicate.txt"));
+			
+			while(sc.hasNext()) {
+				String line= sc.nextLine();
+				String rollNo= line.split("\\t")[0];
+				String examType= line.split("\\t")[1];
+				Configuration.getDao().deleteDuplicates(rollNo,examType);
+			}
+			
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -25,11 +25,11 @@ public class OMRProject {
 		}
 		
 		Processor processor = new Processor(Configuration.getDatFileName());
-		//processor.process();
+		processor.process();
 		
 		//connection needs to be checked
 		
-		ArrayList<ReportColumnType> columnTypes = new ArrayList<>();
+		/*ArrayList<ReportColumnType> columnTypes = new ArrayList<>();
 		columnTypes.add(new ReportColumnType("Roll No.", "roll_no", DataTypes.stringType()));
 		columnTypes.add(new ReportColumnType("Applicant's Name", "applicant_name", DataTypes.stringType()));
 		columnTypes.add(new ReportColumnType("Post Code", "post_code", DataTypes.stringType()));
@@ -53,7 +53,7 @@ public class OMRProject {
 				+ "where roll_no NOT IN (Select roll_no from result) limit 0,100", columnTypes);
 		reportGenerator.getPDFReport("Absentee_report.pdf");
 		reportGenerator.getXLSXReport("Absentee_report.xlsx");
-		reportGenerator.getXLSReport("Absentee_report.xls");
+		reportGenerator.getXLSReport("Absentee_report.xls");*/
 	}
 	
 	static void loadCandidateInfo() {

@@ -1,8 +1,11 @@
+import java.io.FileWriter;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.sql.Statement;
 import java.util.Date;
 
@@ -194,9 +197,23 @@ public class MySQLAccess {
 	        preparedStatement.setString(7, result.getExamType());
 	        preparedStatement.executeUpdate();	        
 	        
-        } catch (SQLException e) {
+        } 
+		catch (SQLException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			if(e.getErrorCode() == 1062) 
+			{
+				System.out.println("duplicate");
+				try {
+					FileWriter fw = new FileWriter("duplicate.txt", true);
+					fw.write(result.getRollNo()+"\t"+result.getExamType()+System.lineSeparator());
+					fw.flush();
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+			
+			//e.printStackTrace();
 		}
 	}
 
@@ -236,6 +253,30 @@ public class MySQLAccess {
 		}
 		
 		return false;
+	}
+
+	public void deleteDuplicates(String rollNo,String examType) {
+		try {
+			preparedStatement = connect
+			        .prepareStatement("DELETE FROM RESULT WHERE ROLL_NO=? AND EXAM_TYPE=?");
+			
+			preparedStatement.setString(1, rollNo);
+			preparedStatement.setString(2, examType);
+			preparedStatement.executeUpdate();
+			
+			preparedStatement = connect
+			        .prepareStatement("DELETE FROM RESULT_DETAILS WHERE ROLL_NO=? AND EXAM_TYPE=?");
+			
+			preparedStatement.setString(1, rollNo);
+			preparedStatement.setString(2, examType);
+			preparedStatement.executeUpdate();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
 	}
 
 }
