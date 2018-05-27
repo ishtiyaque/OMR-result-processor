@@ -1,28 +1,24 @@
 
 public class Result {
 	
-	String rollNo;
-	String givenAnswer;
-	String examType;
-	String setCode;
-	float mark;
+	private String rollNo;
+	private String givenAnswer;
+	private String examType;
+	private String setCode;
 	
-	int correct, incorrect, unanswered;
+	private float mark;
+	
+	private int correct;
+	private int incorrect;
+	private int unanswered;
 
 	public Result() {
 
 	}
 
-	@Override
-	public String toString() {
-		return "Result [studentId=" + rollNo + ", givenAnswer=" + givenAnswer + ", examType=" + examType
-				+ ", setCode=" + setCode + ", mark=" + mark + ", correct=" + correct + ", incorrect=" + incorrect
-				+ ", unanswered=" + unanswered + "]";
-	}
-
 	public Result(String rollNo, String givenAnswer, String examType, String setCode, float mark, int correct,
 			int incorrect, int unanswered) {
-		super();
+
 		this.rollNo = rollNo;
 		this.givenAnswer = givenAnswer;
 		this.examType = examType;
@@ -33,12 +29,12 @@ public class Result {
 		this.unanswered = unanswered;
 	}
 
-	public String getStudentId() {
+	public String getRollNo() {
 		return rollNo;
 	}
 
-	public void setStudentId(String studentId) {
-		this.rollNo = studentId;
+	public void setRollNo(String rollNo) {
+		this.rollNo = rollNo;
 	}
 
 	public String getGivenAnswer() {
@@ -96,8 +92,12 @@ public class Result {
 	public void setUnanswered(int unanswered) {
 		this.unanswered = unanswered;
 	}
-
 	
-	
+	@Override
+	public String toString() {
+		return "Result [rollNo=" + rollNo + ", givenAnswer=" + givenAnswer + ", examType=" + examType
+				+ ", setCode=" + setCode + ", mark=" + mark + ", correct=" + correct + ", incorrect=" + incorrect
+				+ ", unanswered=" + unanswered + "]";
+	}
 
 }

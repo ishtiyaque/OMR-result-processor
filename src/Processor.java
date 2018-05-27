@@ -1,10 +1,10 @@
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.nio.charset.CodingErrorAction;
 import java.util.Scanner;
 
 public class Processor {
-	String datFileName;
+	
+	private String datFileName;
 
 	public Processor(String datFileName) {
 		
@@ -19,54 +19,77 @@ public class Processor {
 			while(sc.hasNext()) {
 				
 				String line = sc.nextLine();
-				Result result =  parse(line);
+				Result result =  processSingleLine(line);
 				System.out.println(result);
-				Configuration.dao.insertResult(result);
+				Configuration.getDao().insertResult(result);
 				break;
 			}
+			sc.close();
 			
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
+		} 
 
 		
 	}
 
-	private Result parse(String line) {
-		// TODO Auto-generated method stub
-		int i,j,k;
-		int correct, incorrect, unanswered,length;
-		float marks;
+	private Result processSingleLine(String line) {
+	
+		int correct = 0; 
+		int incorrect = 0; 
+		int unanswered = 0;
 		
-		correct = incorrect = unanswered = 0;
-		marks = 0;
-		String rollNo = "12345678";
-		String setcode = "01";
-		String givenAnswer = "BC ADBCBDBDBD BCBCBAADBADACABABCBCADACBCCBDACACBDBACADBDBCACDCBCBCBDBCBCBBCBCBCBCBDADACBBADCBDBDBBDA";
+		float marks = 0;
 		
-		String correctAnswer = Configuration.codeAnswerMap.getOrDefault(setcode,null);
+		Result result = parse(line);
+		
+		String correctAnswer = Configuration.getCodeAnswerMap().getOrDefault(result.getSetCode(),null);
+		
 		if(correctAnswer==null) {
 			System.out.println("No correct Answer");
 		}
-		else {
-			length = givenAnswer.length();
-			
-			
-			for(i=0;i<length;i++) {
-				if(givenAnswer.charAt(i)==correctAnswer.charAt(i)) {
+		else {			
+			for(int i=0;i<result.getGivenAnswer().length();i++) {
+				if(result.getGivenAnswer().charAt(i) == correctAnswer.charAt(i)) {
 					correct++;
 				}
-				else if (givenAnswer.charAt(i)==' ') {
+				else if (result.getGivenAnswer().charAt(i) == ' ') {
 					unanswered++;
 				}
 				else incorrect++;
 			}
-			marks = correct * Configuration.corrrectWeight - incorrect * Configuration.incorrecWeight;
+			marks = correct * Configuration.getCorrrectWeight() - incorrect * Configuration.getIncorrecWeight();
 		}
-		Result result = new Result(rollNo, givenAnswer, Configuration.examType, setcode, marks, correct, incorrect, unanswered);
+		
+		result.setCorrect(correct);
+		result.setIncorrect(incorrect);
+		result.setUnanswered(unanswered);
+		result.setMark(marks);
 		
 		return result;
+	}
+	
+	private Result parse(String line) {
+		
+		Result result = new Result();
+		
+		/***************To be populated by parsing in future**********************/
+		
+		String rollNo = "12345678";
+		String setCode = "01";
+		String givenAnswer = "BC ADBCBDBDBD BCBCBAADBADACABABCBCADACBCCBDACACBDBACADBDBCACDCBCBCBDBCBCBBCBCBCBCBDADACBBADCBDBDBBDA";
+		String examType = Configuration.getExamType();
+		
+		/*************************************************************************/
+		
+		result.setRollNo(rollNo);
+		result.setSetCode(setCode);
+		result.setGivenAnswer(givenAnswer);
+		result.setExamType(examType);
+		
+		return result;
+		
 	}
 	
 }

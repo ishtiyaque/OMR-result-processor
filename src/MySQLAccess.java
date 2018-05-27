@@ -124,7 +124,6 @@ public class MySQLAccess {
 
 	
     public void insertConfiguration(String postCode, String setcode, String examType, String correctAnswer) {
-		// TODO Auto-generated method stub
         
     	try {
     		
@@ -150,7 +149,6 @@ public class MySQLAccess {
 	}
 
 	private boolean checkConfigurationExist(String postCode, String setcode, String examType) {
-		// TODO Auto-generated method stub
 		
 		try {
 			preparedStatement = connect
@@ -176,29 +174,64 @@ public class MySQLAccess {
     		
 			preparedStatement = connect
 			        .prepareStatement("insert into  result(roll_no, marks,exam_type) values (?,?,?)");
-			preparedStatement.setString(1, result.rollNo);
-	        preparedStatement.setFloat(2, result.mark);
-	        preparedStatement.setString(3, result.examType);
+			preparedStatement.setString(1, result.getRollNo());
+	        preparedStatement.setFloat(2, result.getMark());
+	        preparedStatement.setString(3, result.getExamType());
 	        preparedStatement.executeUpdate();
 	        
 	        preparedStatement = connect
 			        .prepareStatement("insert into  result_details(roll_no, set_code, given_answer, correct, incorrect, unanswered, exam_type) values (?,?,?,?,?,?,?)");
-			preparedStatement.setString(1, result.rollNo);
-	        preparedStatement.setString(2, result.setCode);
-	        preparedStatement.setString(3, result.givenAnswer);
-	        preparedStatement.setInt(4, result.correct);
-	        preparedStatement.setInt(5, result.incorrect);
-	        preparedStatement.setInt(6, result.unanswered);
-	        preparedStatement.setString(7, result.examType);
-	        preparedStatement.executeUpdate();
+			preparedStatement.setString(1, result.getRollNo());
+	        preparedStatement.setString(2, result.getSetCode());
+	        preparedStatement.setString(3, result.getGivenAnswer());
+	        preparedStatement.setInt(4, result.getCorrect());
+	        preparedStatement.setInt(5, result.getIncorrect());
+	        preparedStatement.setInt(6, result.getUnanswered());
+	        preparedStatement.setString(7, result.getExamType());
+	        preparedStatement.executeUpdate();	        
 	        
-	        
-	        
-    		
         } catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+
+	public void insertCandidateInfo(CandidateInfo candidateInfo) {
+		try {
+			preparedStatement = connect
+			        .prepareStatement("INSERT INTO candidate_info(post_code, roll_no, applicant_name, father_name, mother_name, quota) VALUES (?,?,?,?,?,?)");
+			preparedStatement.setString(1, candidateInfo.getPostCode());
+	        preparedStatement.setString(2, candidateInfo.getRollNo());
+	        preparedStatement.setString(3, candidateInfo.getApplicantName());
+	        preparedStatement.setString(4, candidateInfo.getFathersName());
+	        preparedStatement.setString(5, candidateInfo.getMothersName());
+	        preparedStatement.setString(6, candidateInfo.getQuota());
+	        preparedStatement.executeUpdate();
+	        
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+       
+	}
+
+	public boolean isDataLoaded() {
+		try {
+			preparedStatement = connect
+			        .prepareStatement("SELECT COUNT(*) FROM CANDIDATE_INFO");
+			resultSet = preparedStatement.executeQuery();
+			resultSet.first();
+			
+			System.out.println(resultSet.getInt(0));
+			if(resultSet.getInt(0)>0)return true;
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return false;
 	}
 
 }
