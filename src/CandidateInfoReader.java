@@ -25,9 +25,8 @@ public class CandidateInfoReader {
 		}
 	}
 	
-	ArrayList<CandidateInfo> readAllRows(int sheetNumber) {
+	void readAllRows(int sheetNumber) {
 		
-		ArrayList<CandidateInfo> candidateInfos = new ArrayList<>();
 		Sheet sheet = workbook.getSheetAt(sheetNumber);
 
 		DataFormatter dataFormatter = new DataFormatter();
@@ -45,30 +44,16 @@ public class CandidateInfoReader {
 			candidateInfo.setMothersName(dataFormatter.formatCellValue(row.getCell(5)));
 			candidateInfo.setQuota(dataFormatter.formatCellValue(row.getCell(6)));
 			
-			System.out.println(i);
-			System.out.println(candidateInfo);
 			Configuration.getDao().insertCandidateInfo(candidateInfo);
-		}
-		
-		return candidateInfos;
-	}
-	
-	
-	public static void main(String[] args) {
-		Configuration.loadConfiguration("conf.txt");
-		
-		File directory = new File("data/CandidateInfo/");
-		String fileNames[]= directory.list();
-		
-		for (String string : fileNames) {
-			if(!string.startsWith("~$"))
-			{
-				System.out.println(directory.getAbsolutePath()+File.separator+string);
-				CandidateInfoReader reader = new CandidateInfoReader(directory.getAbsolutePath()+File.separator+string);
-				reader.readAllRows(0);
+			if(i%1000==0) {
+				System.out.println(i);
+				System.out.println(candidateInfo);
 			}
 		}
 		
-		
+		return;
 	}
+	
+	
+	
 }

@@ -25,10 +25,14 @@ public class MySQLAccess {
 
     }
     
+    public Connection getConnection() {
+    	return connect;
+    }
+    
     public void readDataBase() throws Exception {
         try {
             // This will load the MySQL driver, each DB has its own driver
-                        // Statements allow to issue SQL queries to the database
+            // Statements allow to issue SQL queries to the database
             statement = connect.createStatement();
             // Result set get the result of the SQL query
             resultSet = statement
@@ -104,7 +108,7 @@ public class MySQLAccess {
     }
 
     // You need to close the resultSet
-    private void close() {
+    public void close() {
         try {
             if (resultSet != null) {
                 resultSet.close();
@@ -223,8 +227,8 @@ public class MySQLAccess {
 			resultSet = preparedStatement.executeQuery();
 			resultSet.first();
 			
-			System.out.println(resultSet.getInt(0));
-			if(resultSet.getInt(0)>0)return true;
+			System.out.println(resultSet.getInt(1));
+			if(resultSet.getInt(1)>0)return true;
 			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
