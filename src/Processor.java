@@ -5,6 +5,7 @@ import java.util.Scanner;
 public class Processor {
 	
 	private String datFileName;
+	private int desiredLength=151;
 
 	public Processor(String datFileName) {
 		
@@ -19,10 +20,11 @@ public class Processor {
 			while(sc.hasNext()) {
 				
 				String line = sc.nextLine();
+				if(line.length()!=desiredLength) continue;
 				Result result =  processSingleLine(line);
 				System.out.println(result);
 				Configuration.getDao().insertResult(result);
-				break;
+				//break;
 			}
 			sc.close();
 			
@@ -84,11 +86,11 @@ public class Processor {
 		Result result = new Result();
 		
 		/***************To be populated by parsing in future**********************/
-		
-		String rollNo = "12345678";
-		String setCode = "01";
-		String givenAnswer = "BC ADBCBDBDBD BCBCBAADBADACABABCBCADACBCCBDACACBDBACADBDBCACDCBCBCBDBCBCBBCBCBCBCBDADACBBADCBDBDBBDA";
-		String examType = Configuration.getExamType();
+		String header = line.substring(0, 40);
+		String rollNo = line.substring(40, 48);//"12345678";
+		String setCode = line.substring(48, 50);//"01";
+		String examType = line.substring(50, 51);//Configuration.getExamType();
+		String givenAnswer = line.substring(51);//"BC ADBCBDBDBD BCBCBAADBADACABABCBCADACBCCBDACACBDBACADBDBCACDCBCBCBDBCBCBBCBCBCBCBDADACBBADCBDBDBBDA";
 		
 		/*************************************************************************/
 		
