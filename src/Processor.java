@@ -1,5 +1,7 @@
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Scanner;
 
 public class Processor {
@@ -22,6 +24,9 @@ public class Processor {
 				String line = sc.nextLine();
 				if(line.length()!=desiredLength) continue;
 				Result result =  processSingleLine(line);
+				if(result == null) {
+					continue;
+				}
 				System.out.println(result);
 				Configuration.getDao().insertResult(result);
 				//break;
@@ -54,6 +59,9 @@ public class Processor {
 		float marks = 0;
 		
 		Result result = parse(line);
+		if(result == null) {
+			return null;
+		}
 		
 		String correctAnswer = Configuration.getCodeAnswerMap().getOrDefault(result.getSetCode(),null);
 		
@@ -87,9 +95,38 @@ public class Processor {
 		
 		/***************To be populated by parsing in future**********************/
 		String header = line.substring(0, 40);
+		
 		String rollNo = line.substring(40, 48);//"12345678";
+		if(rollNo.contains("*")) {
+			logError(rollNo, "rollNo contains *");
+			return null;
+		}
+		if(rollNo.contains(" ")) {
+			logError(rollNo, "rollNo contains space");
+			return null;
+		}
 		String setCode = line.substring(48, 50);//"01";
+		if(setCode.contains("*")) {
+			logError(rollNo, "setCode contains *");
+			return null;
+		}
+		if(setCode.contains(" ")) {
+			logError(rollNo, "setCode contains space");
+			return null;
+		}
 		String examType = line.substring(50, 51);//Configuration.getExamType();
+		if(examType.contains("*")) {
+			logError(rollNo, "examType contains *");
+			return null;
+		}
+		if(examType.contains(" ")) {
+			logError(rollNo, "examType contains space");
+			return null;
+		}
+		if(Configuration.getExamType().equals(examType)==false) {
+			logError(rollNo, "examType mismatch");
+			return null;
+		}
 		String givenAnswer = line.substring(51);//"BC ADBCBDBDBD BCBCBAADBADACABABCBCADACBCCBDACACBDBACADBDBCACDCBCBCBDBCBCBBCBCBCBCBDADACBBADCBDBDBBDA";
 		
 		/*************************************************************************/
@@ -100,6 +137,20 @@ public class Processor {
 		result.setExamType(examType);
 		
 		return result;
+		
+	}
+	
+	private void logError(String rollNo, String errorMessage) {
+		FileWriter fw;
+		try {
+			fw = new FileWriter("error.txt", true);
+			fw.write(rollNo+"\t"+errorMessage+System.lineSeparator());
+			fw.flush();
+			fw.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 	}
 	
