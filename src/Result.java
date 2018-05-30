@@ -7,7 +7,7 @@ public class Result {
 	private String examType;
 	private String setCode;
 	
-	private float mark;
+	//private float mark;
 	
 	private int correct;
 	private int incorrect;
@@ -25,7 +25,7 @@ public class Result {
 		this.givenAnswer = givenAnswer;
 		this.examType = examType;
 		this.setCode = setCode;
-		this.mark = mark;
+		//this.mark = mark;
 		this.correct = correct;
 		this.incorrect = incorrect;
 		this.unanswered = unanswered;
@@ -72,13 +72,13 @@ public class Result {
 		this.setCode = setCode;
 	}
 
-	public float getMark() {
+	/*public float getMark() {
 		return mark;
-	}
+	}*/
 
-	public void setMark(float mark) {
+	/*public void setMark(float mark) {
 		this.mark = mark;
-	}
+	}*/
 
 	public int getCorrect() {
 		return correct;
@@ -112,12 +112,14 @@ public class Result {
 	public void setUnanswered(int unanswered) {
 		this.unanswered = unanswered;
 	}
-	
+
 	@Override
 	public String toString() {
-		return "Result [rollNo=" + rollNo + ", givenAnswer=" + givenAnswer + ", examType=" + examType
-				+ ", setCode=" + setCode + ", mark=" + mark + ", correct=" + correct + ", incorrect=" + incorrect
-				+ ", unanswered=" + unanswered + "]";
+		return "Result [omrHeader=" + omrHeader + ", rollNo=" + rollNo + ", givenAnswer=" + givenAnswer + ", examType="
+				+ examType + ", setCode=" + setCode + ", correct=" + correct + ", incorrect=" + incorrect
+				+ ", multipleAnswer=" + multipleAnswer + ", unanswered=" + unanswered + "]";
 	}
+	
+	
 
 }

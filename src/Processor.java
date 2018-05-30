@@ -7,7 +7,7 @@ import java.util.Scanner;
 public class Processor {
 	
 	private String datFileName;
-	private int desiredLength=151;
+	
 
 	public Processor(String datFileName) {
 		
@@ -22,7 +22,7 @@ public class Processor {
 			while(sc.hasNext()) {
 				
 				String line = sc.nextLine();
-				if(line.length()!=desiredLength) continue;
+				if(line.length()!=Configuration.getDesiredlength()) continue;
 				Result result =  processSingleLine(line);
 				if(result == null) {
 					continue;

@@ -9,6 +9,8 @@ public class Configuration {
 	private static String datFileName;
 	private static String postCode;
 	private static String examType;
+	
+	private static final int desiredLength=151;
 
 	private static float corrrectWeight = 1;
 	private static float incorrecWeight = 0;
@@ -69,6 +71,10 @@ public class Configuration {
 
 	public static float getIncorrecWeight() {
 		return incorrecWeight;
+	}
+
+	public static int getDesiredlength() {
+		return desiredLength;
 	}
 
 	public static HashMap<String, String> getCodeAnswerMap() {
