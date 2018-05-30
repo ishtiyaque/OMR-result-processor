@@ -1,6 +1,7 @@
 
 public class Result {
 	
+	private String omrHeader;
 	private String rollNo;
 	private String givenAnswer;
 	private String examType;
@@ -10,6 +11,7 @@ public class Result {
 	
 	private int correct;
 	private int incorrect;
+	private int multipleAnswer;
 	private int unanswered;
 
 	public Result() {
@@ -27,6 +29,15 @@ public class Result {
 		this.correct = correct;
 		this.incorrect = incorrect;
 		this.unanswered = unanswered;
+	}
+
+	
+	public String getOmrHeader() {
+		return omrHeader;
+	}
+
+	public void setOmrHeader(String omrHeader) {
+		this.omrHeader = omrHeader;
 	}
 
 	public String getRollNo() {
@@ -84,6 +95,15 @@ public class Result {
 	public void setIncorrect(int incorrect) {
 		this.incorrect = incorrect;
 	}
+	
+	public int getMultipleAnswer() {
+		return multipleAnswer;
+	}
+
+	public void setMultipleAnswer(int multipleAnswer) {
+		this.multipleAnswer = multipleAnswer;
+	}
+
 
 	public int getUnanswered() {
 		return unanswered;
