@@ -27,6 +27,15 @@ public class OMRProject {
 		Processor processor = new Processor(Configuration.getDatFileName());
 		processor.process();
 		
+		ArrayList<String> setCodes = new ArrayList<>();
+		for (String setcode : Configuration.getCodeAnswerMap().keySet())
+		{
+			setCodes.add(setcode);
+		}
+		
+		ResultGenerator resultGenerator = new ResultGenerator();
+		resultGenerator.calculateMarks(setCodes);
+		
 		//connection needs to be checked
 		
 		/*ArrayList<ReportColumnType> columnTypes = new ArrayList<>();

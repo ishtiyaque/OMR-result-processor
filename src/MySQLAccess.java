@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.SQLIntegrityConstraintViolationException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.Date;
 
 public class MySQLAccess {
@@ -278,9 +279,76 @@ public class MySQLAccess {
 		
 	}
 	
+	public void insertResult(String rollNo, float marks, String setCode) {
+		
+		try {
+			preparedStatement = connect
+			        .prepareStatement("insert into  result(roll_no, marks, set_code) values (?,?,?)");
+			preparedStatement.setString(1, rollNo);
+	        preparedStatement.setFloat(2,marks);
+	        preparedStatement.setString(3, setCode);
+	        preparedStatement.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+
+	public ArrayList<ResultDetails> getResultDetails(ArrayList<String> setCodes) {
+		
+		ArrayList<ResultDetails> resultDetailsList = new ArrayList<ResultDetails>();
+		
+		int size = setCodes.size();
+		if (size == 0)
+		{
+			return null;
+		}
+		String query = "SELECT * FROM result_details WHERE (";
+		query += "set_code=? ";
+		for(int i=1;i<size;i++) {
+			query += "OR set_code=? ";
+		}
+		
+		query += ") AND error_code=0 ";
+		
+		try {
+			preparedStatement = connect
+			        .prepareStatement(query);
+			for(int i=0;i<size;i++) {
+				preparedStatement.setString(i+1, setCodes.get(i));
+			
+			}
+			//System.out.println(preparedStatement);
+			resultSet = preparedStatement.executeQuery();
+			
+			while (resultSet.next()) {
+				ResultDetails resultDetails = new ResultDetails();
+	            
+			
+	            resultDetails.setRollNo(resultSet.getString("roll_no"));
+	            resultDetails.setSetCode(resultSet.getString("set_code"));
+	            resultDetails.setCorrect(resultSet.getInt("correct"));
+	            resultDetails.setIncorrect(resultSet.getInt("incorrect"));
+	            resultDetails.setMultipleAnswered(resultSet.getInt("multiple_answered"));
+	            resultDetails.setUnanswered(resultSet.getInt("unanswered"));
+	            
+	            resultDetailsList.add(resultDetails);
+	            
+	            //System.out.println(resultDetails.getRollNo());
+	        }
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return resultDetailsList;
+	}
+	
    
 	
-	
+	//SELECT * FROM `result_details` WHERE (set_code="01" OR set_code="02") AND error_code=0 
 	
 
 }
