@@ -55,8 +55,8 @@ public class Processor {
 		int correct = 0; 
 		int incorrect = 0; 
 		int unanswered = 0;
+		int multipleAnswered = 0;
 		
-		float marks = 0;
 		
 		Result result = parse(line);
 		if(result == null) {
@@ -76,25 +76,29 @@ public class Processor {
 				else if (result.getGivenAnswer().charAt(i) == ' ') {
 					unanswered++;
 				}
+				else if (result.getGivenAnswer().charAt(i) == '*') {
+					multipleAnswered++;
+				}
 				else incorrect++;
 			}
-			marks = correct * Configuration.getCorrrectWeight() - incorrect * Configuration.getIncorrecWeight();
+
 		}
 		
 		result.setCorrect(correct);
 		result.setIncorrect(incorrect);
 		result.setUnanswered(unanswered);
-		result.setMark(marks);
+		result.setMultipleAnswered(multipleAnswered);
+		
 		
 		return result;
 	}
 	
 	private Result parse(String line) {
 		
-		Result result = new Result();
+		
 		
 		/***************To be populated by parsing in future**********************/
-		String header = line.substring(0, 40);
+		String omrHeader = line.substring(0, 40);
 		
 		String rollNo = line.substring(40, 48);//"12345678";
 		if(rollNo.contains("*")) {
@@ -130,7 +134,9 @@ public class Processor {
 		String givenAnswer = line.substring(51);//"BC ADBCBDBDBD BCBCBAADBADACABABCBCADACBCCBDACACBDBACADBDBCACDCBCBCBDBCBCBBCBCBCBCBDADACBBADCBDBDBBDA";
 		
 		/*************************************************************************/
+		Result result = new Result();
 		
+		result.setOmrHeader(omrHeader);
 		result.setRollNo(rollNo);
 		result.setSetCode(setCode);
 		result.setGivenAnswer(givenAnswer);

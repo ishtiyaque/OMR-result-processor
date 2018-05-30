@@ -11,27 +11,35 @@ public class Result {
 	
 	private int correct;
 	private int incorrect;
-	private int multipleAnswer;
+	private int multipleAnswered;
 	private int unanswered;
+	
+	private boolean errorFlag;
 
 	public Result() {
-
+		
+		this.errorFlag = false;
 	}
 
-	public Result(String rollNo, String givenAnswer, String examType, String setCode, float mark, int correct,
-			int incorrect, int unanswered) {
-
+	
+	
+	public Result(String omrHeader, String rollNo, String givenAnswer, String examType, String setCode, int correct,
+			int incorrect, int multipleAnswered, int unanswered) {
+		super();
+		this.omrHeader = omrHeader;
 		this.rollNo = rollNo;
 		this.givenAnswer = givenAnswer;
 		this.examType = examType;
 		this.setCode = setCode;
-		//this.mark = mark;
 		this.correct = correct;
 		this.incorrect = incorrect;
+		this.multipleAnswered = multipleAnswered;
 		this.unanswered = unanswered;
+		this.errorFlag = false;
 	}
 
-	
+
+
 	public String getOmrHeader() {
 		return omrHeader;
 	}
@@ -96,12 +104,12 @@ public class Result {
 		this.incorrect = incorrect;
 	}
 	
-	public int getMultipleAnswer() {
-		return multipleAnswer;
+	public int getMultipleAnswered() {
+		return multipleAnswered;
 	}
 
-	public void setMultipleAnswer(int multipleAnswer) {
-		this.multipleAnswer = multipleAnswer;
+	public void setMultipleAnswered(int multipleAnswered) {
+		this.multipleAnswered = multipleAnswered;
 	}
 
 
@@ -112,13 +120,26 @@ public class Result {
 	public void setUnanswered(int unanswered) {
 		this.unanswered = unanswered;
 	}
+	
+	public boolean isErrorFlag() {
+		return errorFlag;
+	}
+
+	public void setErrorFlag(boolean errorFlag) {
+		this.errorFlag = errorFlag;
+	}
+
+
 
 	@Override
 	public String toString() {
 		return "Result [omrHeader=" + omrHeader + ", rollNo=" + rollNo + ", givenAnswer=" + givenAnswer + ", examType="
 				+ examType + ", setCode=" + setCode + ", correct=" + correct + ", incorrect=" + incorrect
-				+ ", multipleAnswer=" + multipleAnswer + ", unanswered=" + unanswered + "]";
+				+ ", multipleAnswered=" + multipleAnswered + ", unanswered=" + unanswered + ", errorFlag=" + errorFlag
+				+ "]";
 	}
+
+	
 	
 	
 
