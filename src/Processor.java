@@ -23,24 +23,16 @@ public class Processor {
 				
 				String line = sc.nextLine();
 				if(line.length()!=Configuration.getDesiredlength()) continue;
-				Result result =  processSingleLine(line);
+				ResultDetails result =  processSingleLine(line);
 				if(result == null) {
 					continue;
 				}
 				System.out.println(result);
-				Configuration.getDao().insertResult(result);
+				Configuration.getDao().insertResultDetails(result);
 				//break;
 			}
 			sc.close();
-			
-			sc = new Scanner(new File("duplicate.txt"));
-			
-			while(sc.hasNext()) {
-				String line= sc.nextLine();
-				String rollNo= line.split("\\t")[0];
-				String examType= line.split("\\t")[1];
-				Configuration.getDao().deleteDuplicates(rollNo,examType);
-			}
+			Configuration.getDao().detectDuplicates();
 			
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
@@ -50,7 +42,7 @@ public class Processor {
 		
 	}
 
-	private Result processSingleLine(String line) {
+	private ResultDetails processSingleLine(String line) {
 	
 		int correct = 0; 
 		int incorrect = 0; 
@@ -58,15 +50,13 @@ public class Processor {
 		int multipleAnswered = 0;
 		
 		
-		Result result = parse(line);
-		if(result == null) {
-			return null;
-		}
+		ResultDetails result = parse(line);
 		
 		String correctAnswer = Configuration.getCodeAnswerMap().getOrDefault(result.getSetCode(),null);
 		
 		if(correctAnswer==null) {
-			System.out.println("No correct Answer");
+			result.setErrorCode(ErrorTypes.INVALID_SET_CODE);
+			return result;
 		}
 		else {			
 			for(int i=0;i<result.getGivenAnswer().length();i++) {
@@ -93,48 +83,41 @@ public class Processor {
 		return result;
 	}
 	
-	private Result parse(String line) {
+	private ResultDetails parse(String line) {
 		
-		
+		ResultDetails result = new ResultDetails();
 		
 		/***************To be populated by parsing in future**********************/
 		String omrHeader = line.substring(0, 40);
 		
 		String rollNo = line.substring(40, 48);//"12345678";
 		if(rollNo.contains("*")) {
-			logError(rollNo, "rollNo contains *");
-			return null;
+			result.setErrorCode(ErrorTypes.ROLL_CONTAINS_ASTERISK);
 		}
 		if(rollNo.contains(" ")) {
-			logError(rollNo, "rollNo contains space");
-			return null;
+			result.setErrorCode(ErrorTypes.ROLL_CONTAINS_SPACE);
 		}
 		String setCode = line.substring(48, 50);//"01";
 		if(setCode.contains("*")) {
-			logError(rollNo, "setCode contains *");
-			return null;
+			result.setErrorCode(ErrorTypes.SET_CODE_CONTAINS_ASTERISK);
+			
 		}
 		if(setCode.contains(" ")) {
-			logError(rollNo, "setCode contains space");
-			return null;
+			result.setErrorCode(ErrorTypes.SET_CODE_CONTAINS_SPACE);
 		}
 		String examType = line.substring(50, 51);//Configuration.getExamType();
 		if(examType.contains("*")) {
-			logError(rollNo, "examType contains *");
-			return null;
+			result.setErrorCode(ErrorTypes.EXAM_TYPE_CONTAINS_ASTERISK);
 		}
 		if(examType.contains(" ")) {
-			logError(rollNo, "examType contains space");
-			return null;
+			result.setErrorCode(ErrorTypes.EXAM_TYPE_CONTAINS_SPACE);
 		}
 		if(Configuration.getExamType().equals(examType)==false) {
-			logError(rollNo, "examType mismatch");
-			return null;
+			result.setErrorCode(ErrorTypes.EXAM_TYPE_MISMATCH);
 		}
 		String givenAnswer = line.substring(51);//"BC ADBCBDBDBD BCBCBAADBADACABABCBCADACBCCBDACACBDBACADBDBCACDCBCBCBDBCBCBBCBCBCBCBDADACBBADCBDBDBBDA";
 		
 		/*************************************************************************/
-		Result result = new Result();
 		
 		result.setOmrHeader(omrHeader);
 		result.setRollNo(rollNo);
@@ -146,18 +129,5 @@ public class Processor {
 		
 	}
 	
-	private void logError(String rollNo, String errorMessage) {
-		FileWriter fw;
-		try {
-			fw = new FileWriter("error.txt", true);
-			fw.write(rollNo+"\t"+errorMessage+System.lineSeparator());
-			fw.flush();
-			fw.close();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-	}
 	
 }

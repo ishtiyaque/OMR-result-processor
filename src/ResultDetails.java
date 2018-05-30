@@ -1,5 +1,5 @@
 
-public class Result {
+public class ResultDetails {
 	
 	private String omrHeader;
 	private String rollNo;
@@ -14,16 +14,16 @@ public class Result {
 	private int multipleAnswered;
 	private int unanswered;
 	
-	private boolean errorFlag;
+	private int errorCode;
 
-	public Result() {
+	public ResultDetails() {
 		
-		this.errorFlag = false;
+		this.errorCode = ErrorTypes.NO_ERROR;
 	}
 
 	
 	
-	public Result(String omrHeader, String rollNo, String givenAnswer, String examType, String setCode, int correct,
+	public ResultDetails(String omrHeader, String rollNo, String givenAnswer, String examType, String setCode, int correct,
 			int incorrect, int multipleAnswered, int unanswered) {
 		super();
 		this.omrHeader = omrHeader;
@@ -35,7 +35,7 @@ public class Result {
 		this.incorrect = incorrect;
 		this.multipleAnswered = multipleAnswered;
 		this.unanswered = unanswered;
-		this.errorFlag = false;
+		this.errorCode = ErrorTypes.NO_ERROR;
 	}
 
 
@@ -121,26 +121,28 @@ public class Result {
 		this.unanswered = unanswered;
 	}
 	
-	public boolean isErrorFlag() {
-		return errorFlag;
+	
+
+
+	public int getErrorCode() {
+		return errorCode;
 	}
 
-	public void setErrorFlag(boolean errorFlag) {
-		this.errorFlag = errorFlag;
+
+
+	public void setErrorCode(int errorCode) {
+		this.errorCode = errorCode;
 	}
 
 
 
 	@Override
 	public String toString() {
-		return "Result [omrHeader=" + omrHeader + ", rollNo=" + rollNo + ", givenAnswer=" + givenAnswer + ", examType="
-				+ examType + ", setCode=" + setCode + ", correct=" + correct + ", incorrect=" + incorrect
-				+ ", multipleAnswered=" + multipleAnswered + ", unanswered=" + unanswered + ", errorFlag=" + errorFlag
-				+ "]";
+		return "ResultDetails [omrHeader=" + omrHeader + ", rollNo=" + rollNo + ", givenAnswer=" + givenAnswer
+				+ ", examType=" + examType + ", setCode=" + setCode + ", correct=" + correct + ", incorrect="
+				+ incorrect + ", multipleAnswered=" + multipleAnswered + ", unanswered=" + unanswered + ", errorCode="
+				+ errorCode + "]";
 	}
-
-	
-	
 	
 
 }

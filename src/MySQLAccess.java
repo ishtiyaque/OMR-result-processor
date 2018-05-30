@@ -176,13 +176,12 @@ public class MySQLAccess {
 		return false;
 	}
 
-	public void insertResult(Result result) {
+	public void insertResultDetails(ResultDetails result) {
 		try {
     		
 			
-	        
 	        preparedStatement = connect
-			        .prepareStatement("insert into  result_details(omr_header,roll_no, set_code, given_answer, correct, incorrect, multiple_answered,unanswered, exam_type) values (?,?,?,?,?,?,?,?,?)");
+			        .prepareStatement("insert into  result_details(omr_header,roll_no, set_code, given_answer, correct, incorrect, multiple_answered,unanswered, exam_type,error_code) values (?,?,?,?,?,?,?,?,?,?)");
 	        preparedStatement.setString(1, result.getOmrHeader());
 	        preparedStatement.setString(2, result.getRollNo());
 	        preparedStatement.setString(3, result.getSetCode());
@@ -192,25 +191,12 @@ public class MySQLAccess {
 	        preparedStatement.setInt(7, result.getMultipleAnswered());
 	        preparedStatement.setInt(8, result.getUnanswered());
 	        preparedStatement.setString(9, result.getExamType());
+	        preparedStatement.setInt(10, result.getErrorCode());
 	        preparedStatement.executeUpdate();	        
 	        
         } 
 		catch (SQLException e) {
-			// TODO Auto-generated catch block
-			if(e.getErrorCode() == 1062) 
-			{
-				System.out.println("duplicate");
-				try {
-					FileWriter fw = new FileWriter("duplicate.txt", true);
-					fw.write(result.getRollNo()+"\t"+result.getExamType()+System.lineSeparator());
-					fw.flush();
-				} catch (IOException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-			}
-			
-			//e.printStackTrace();
+			e.printStackTrace();
 		}
 	}
 
@@ -268,6 +254,22 @@ public class MySQLAccess {
 			preparedStatement.setString(2, examType);
 			preparedStatement.executeUpdate();
 			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		
+	}
+	
+	public void detectDuplicates() {
+		try {
+			preparedStatement = connect
+			        .prepareStatement("UPDATE result_details set `error_code`=? where roll_no in ( select roll_no from(select * from result_details) as m2 group by roll_no having count(roll_no)>1)");
+			preparedStatement.setInt(1, ErrorTypes.DUPLICATE_ROLL);
+			preparedStatement.executeUpdate();
+
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
