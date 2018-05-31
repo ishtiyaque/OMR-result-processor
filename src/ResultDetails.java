@@ -18,6 +18,11 @@ public class ResultDetails {
 
 	public ResultDetails() {
 		
+		this.correct = -1;
+		this.incorrect = -1;
+		this.multipleAnswered = -1;
+		this.unanswered = -1;
+		
 		this.errorCode = ErrorTypes.NO_ERROR;
 	}
 
