@@ -24,8 +24,8 @@ public class OMRProject {
 			loadCandidateInfo();
 		}
 		
-		Processor processor = new Processor(Configuration.getDatFileName());
-		processor.process();
+		Processor processor = new Processor();
+		processor.processFile(Configuration.getDatFileName());
 		
 		ArrayList<String> setCodes = new ArrayList<>();
 		for (String setcode : Configuration.getCodeAnswerMap().keySet())
