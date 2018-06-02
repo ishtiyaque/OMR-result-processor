@@ -27,18 +27,21 @@ public class ResultGenerator {
 		
 	}
 
-	/*public static void main(String[] args) {
+	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		Configuration.loadConfiguration("conf.txt");
 		//Configuration.getDao().insertResult("12345", 10.25f, "03");
 		ArrayList<String> setCodes = new ArrayList<>();
-		setCodes.add("01");
-		setCodes.add("03");
-		ResultGenerator temp = new ResultGenerator();
-		temp.calculateMarks(setCodes);
+		for (String setcode : Configuration.getCodeAnswerMap().keySet())
+		{
+			setCodes.add(setcode);
+		}
+		
+		ResultGenerator resultGenerator = new ResultGenerator();
+		resultGenerator.calculateMarks(setCodes);
 
 	}
-	*/
+	
 	
 
 
