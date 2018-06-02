@@ -342,12 +342,16 @@ public class MySQLAccess {	private Connection connect = null;
 			while (resultSet.next()) {
 				ResultDetails resultDetails = new ResultDetails();
 
+				resultDetails.setOmrHeader(resultSet.getString("omr_header"));
 				resultDetails.setRollNo(resultSet.getString("roll_no"));
+				resultDetails.setExamType(resultSet.getString("exam_type"));
 				resultDetails.setSetCode(resultSet.getString("set_code"));
 				resultDetails.setCorrect(resultSet.getInt("correct"));
 				resultDetails.setIncorrect(resultSet.getInt("incorrect"));
 				resultDetails.setMultipleAnswered(resultSet.getInt("multiple_answered"));
 				resultDetails.setUnanswered(resultSet.getInt("unanswered"));
+				resultDetails.setGivenAnswer(resultSet.getString("given_answer"));
+				resultDetails.setErrorCode(resultSet.getInt("error_code"));
 
 				resultDetailsList.add(resultDetails);
 			}
