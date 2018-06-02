@@ -327,4 +327,64 @@ public class MySQLAccess {	private Connection connect = null;
 		return resultDetailsList;
 	}
 
+	public ArrayList<ResultDetails> getResultsWithSetCodeErrors() {
+		
+		String query = "SELECT * FROM result_details WHERE error_code=? OR error_code=? OR error_code=?";
+		ArrayList<ResultDetails> resultDetailsList = new ArrayList<ResultDetails>();
+		
+		try {
+			preparedStatement = connect.prepareStatement(query);
+			preparedStatement.setInt(1, ErrorTypes.INVALID_SET_CODE);
+			preparedStatement.setInt(2, ErrorTypes.SET_CODE_CONTAINS_SPACE);
+			preparedStatement.setInt(3, ErrorTypes.SET_CODE_CONTAINS_ASTERISK);
+			
+			resultSet = preparedStatement.executeQuery();
+			while (resultSet.next()) {
+				ResultDetails resultDetails = new ResultDetails();
+
+				resultDetails.setRollNo(resultSet.getString("roll_no"));
+				resultDetails.setSetCode(resultSet.getString("set_code"));
+				resultDetails.setCorrect(resultSet.getInt("correct"));
+				resultDetails.setIncorrect(resultSet.getInt("incorrect"));
+				resultDetails.setMultipleAnswered(resultSet.getInt("multiple_answered"));
+				resultDetails.setUnanswered(resultSet.getInt("unanswered"));
+
+				resultDetailsList.add(resultDetails);
+			}
+
+			
+		}catch(Exception e){
+			e.printStackTrace();			
+		}
+		return resultDetailsList;
+	}
+
+	public void updateResultDetails(ResultDetails updatedResult) {
+		String query = "UPDATE result_details SET correct=?, incorrect=?, multiple_answered=?,"
+				+ " unanswered=?, error_code=?, set_code=? WHERE omr_header=? AND roll_no=? "
+				+ "AND exam_type=?";
+		
+		try {
+			preparedStatement = connect.prepareStatement(query);
+			
+			preparedStatement.setInt(1, updatedResult.getCorrect());
+			preparedStatement.setInt(2, updatedResult.getIncorrect());
+			preparedStatement.setInt(3, updatedResult.getMultipleAnswered());
+			preparedStatement.setInt(4, updatedResult.getUnanswered());
+			preparedStatement.setInt(5, updatedResult.getErrorCode());
+			preparedStatement.setString(6, updatedResult.getSetCode());
+			
+			preparedStatement.setString(7, updatedResult.getOmrHeader());
+			preparedStatement.setString(8, updatedResult.getRollNo());
+			preparedStatement.setString(9, updatedResult.getExamType());
+			
+			preparedStatement.executeUpdate();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+
 }
