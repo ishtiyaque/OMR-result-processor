@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Scanner;
 
 public class Configuration {
-
+	private static final String CONF_TXT = "conf_2.txt";
 	private static String databaseName;
 	private static String datFileName;
 	private static String postCode;
@@ -19,7 +19,8 @@ public class Configuration {
 
 	private static MySQLAccess dao;
 
-	public static void loadConfiguration(String fileName) {
+	public static void loadConfiguration() {
+		String fileName = CONF_TXT;
 
 		codeAnswerMap = new HashMap<String, String>();
 

@@ -13,11 +13,11 @@ import net.sf.dynamicreports.report.exception.DRException;
 
 public class OMRProject {
 	
-	private static final String CONF_TXT = "conf.txt";
+	
 
 	public static void main(String[] args) {
 		
-		Configuration.loadConfiguration(CONF_TXT);
+		Configuration.loadConfiguration();
 		//Configuration.printConfiguration();
 
 		if(!Configuration.getDao().isDataLoaded()) {

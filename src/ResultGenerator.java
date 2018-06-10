@@ -29,7 +29,7 @@ public class ResultGenerator {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		Configuration.loadConfiguration("conf.txt");
+		Configuration.loadConfiguration();
 		//Configuration.getDao().insertResult("12345", 10.25f, "03");
 		ArrayList<String> setCodes = new ArrayList<>();
 		for (String setcode : Configuration.getCodeAnswerMap().keySet())

@@ -3,7 +3,7 @@ import java.util.ArrayList;
 public class ErrorResolver {
 
 	public static void main(String[] args) {
-		Configuration.loadConfiguration("conf.txt");
+		Configuration.loadConfiguration();
 		
 		ErrorResolver errorResolver = new ErrorResolver();
 		errorResolver.resolveSetCodeErrors();

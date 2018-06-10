@@ -1,0 +1,7 @@
+
+---ABOVE 50 OR Quota ---
+select count(*) from result_details rd, candidate_info cd where rd.roll_no = cd.roll_no and (rd.correct >= 50 OR cd.quota <> "Non Quota")
+
+----Absentee Report-------
+SELECT roll_no, applicant_name, post_code from candidate_info
+			where roll_no NOT IN (Select roll_no from result_details Where (set_code = 03 OR set_code = 04))

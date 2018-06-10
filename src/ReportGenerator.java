@@ -19,7 +19,7 @@ public class ReportGenerator {
 
 	public static void main(String args[]) {
 		
-		Configuration.loadConfiguration("conf.txt");
+		Configuration.loadConfiguration();
 		// connection needs to be checked
 
 		ArrayList<ReportColumnType> columnTypes = new ArrayList<>();
@@ -29,21 +29,22 @@ public class ReportGenerator {
 
 		ReportGenerator reportGenerator = new ReportGenerator();
 		// limit only 100
+		/********
 		reportGenerator.buildReport("Candidate Info",
 				"SELECT roll_no, applicant_name, post_code" + " FROM candidate_info limit 0,100", columnTypes);
 		reportGenerator.getPDFReport("report.pdf");
 		reportGenerator.getXLSXReport("report.xlsx");
 		reportGenerator.getXLSReport("report.xls");
-
+		*************************/
 		// Absentee List generator
 		columnTypes.clear();
 		columnTypes.add(new ReportColumnType("Roll No.", "roll_no", DataTypes.stringType()));
 		columnTypes.add(new ReportColumnType("Applicant's Name", "applicant_name", DataTypes.stringType()));
-		columnTypes.add(new ReportColumnType("Post Code", "post_code", DataTypes.stringType()));
+		//columnTypes.add(new ReportColumnType("Post Code", "post_code", DataTypes.stringType()));
 
 		// ReportGenerator reportGenerator = new ReportGenerator();
-		reportGenerator.buildReport("Absentee List", "SELECT roll_no, applicant_name, post_code from candidate_info "
-				+ "where roll_no NOT IN (Select roll_no from result) limit 0,100", columnTypes);
+		reportGenerator.buildReport("Absentee List", "SELECT roll_no, applicant_name from candidate_info "
+				+ "where roll_no NOT IN (Select roll_no from result) AND post_code = 150", columnTypes);
 		reportGenerator.getPDFReport("Absentee_report.pdf");
 		reportGenerator.getXLSXReport("Absentee_report.xlsx");
 		reportGenerator.getXLSReport("Absentee_report.xls");
