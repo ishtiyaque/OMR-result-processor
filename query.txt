@@ -5,3 +5,10 @@ select count(*) from result_details rd, candidate_info cd where rd.roll_no = cd.
 ----Absentee Report-------
 SELECT roll_no, applicant_name, post_code from candidate_info
 			where roll_no NOT IN (Select roll_no from result_details Where (set_code = 03 OR set_code = 04))
+			
+			
+			
+			SELECT roll_no, marks FROM `result` WHERE roll_no in(
+
+
+select roll_no from candidate_info where quota<>"Non Quota")
