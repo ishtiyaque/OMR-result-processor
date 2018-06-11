@@ -43,8 +43,10 @@ public class ReportGenerator {
 		//columnTypes.add(new ReportColumnType("Post Code", "post_code", DataTypes.stringType()));
 
 		// ReportGenerator reportGenerator = new ReportGenerator();
-		reportGenerator.buildReport("Absentee List", "SELECT roll_no, applicant_name from candidate_info "
-				+ "where roll_no NOT IN (Select roll_no from result) AND post_code = 150", columnTypes);
+		//reportGenerator.buildReport("Absentee List", "SELECT roll_no, applicant_name from candidate_info "
+		//		+ "where roll_no NOT IN (Select roll_no from result) AND post_code = 150", columnTypes);
+		reportGenerator.buildReport("Present List", "SELECT roll_no, applicant_name from candidate_info "
+						+ "where roll_no  IN (Select roll_no from result) AND post_code = 150", columnTypes);
 		reportGenerator.getPDFReport("Absentee_report.pdf");
 		reportGenerator.getXLSXReport("Absentee_report.xlsx");
 		reportGenerator.getXLSReport("Absentee_report.xls");
