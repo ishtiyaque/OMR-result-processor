@@ -39,17 +39,16 @@ public class ReportGenerator {
 		// Absentee List generator
 		columnTypes.clear();
 		columnTypes.add(new ReportColumnType("Roll No.", "roll_no", DataTypes.stringType()));
-		columnTypes.add(new ReportColumnType("Applicant's Name", "applicant_name", DataTypes.stringType()));
+		//columnTypes.add(new ReportColumnType("Applicant's Name", "applicant_name", DataTypes.stringType()));
 		//columnTypes.add(new ReportColumnType("Post Code", "post_code", DataTypes.stringType()));
 
 		// ReportGenerator reportGenerator = new ReportGenerator();
 		//reportGenerator.buildReport("Absentee List", "SELECT roll_no, applicant_name from candidate_info "
 		//		+ "where roll_no NOT IN (Select roll_no from result) AND post_code = 150", columnTypes);
-		reportGenerator.buildReport("Present List", "SELECT roll_no, applicant_name from candidate_info "
-						+ "where roll_no  IN (Select roll_no from result) AND post_code = 150", columnTypes);
-		reportGenerator.getPDFReport("Absentee_report.pdf");
-		reportGenerator.getXLSXReport("Absentee_report.xlsx");
-		reportGenerator.getXLSReport("Absentee_report.xls");
+		reportGenerator.buildReport("Present List", "SELECT roll_no from result where set_code = 08", columnTypes);
+		reportGenerator.getPDFReport("Set_08_Present_List.pdf");
+		//reportGenerator.getXLSXReport("Absentee_report.xlsx");
+		//reportGenerator.getXLSReport("Absentee_report.xls");
 	}
 
 	public void buildReport(String title, String query, ArrayList<ReportColumnType> columns) {

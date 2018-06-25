@@ -12,3 +12,17 @@ SELECT roll_no, applicant_name, post_code from candidate_info
 
 
 select roll_no from candidate_info where quota<>"Non Quota")
+
+
+
+
+
+select * from candidate_info Left outer join result on candidate_info.roll_no=result.roll_no where candidate_info.post_code=150 
+
+--- Query for generating form 2---------------------------------
+
+SELECT count(roll_no) FROM `result` WHERE marks>=31 and roll_no in (select roll_no from candidate_info where quota='non quota' and post_code=200)
+
+SELECT count(roll_no) FROM `result` WHERE marks>=21 and roll_no in (select roll_no from candidate_info where quota<>'non quota' and post_code=200)
+
+***************************************************************************************************************************************************************
