@@ -139,8 +139,17 @@ public class MySQLAccess {	private Connection connect = null;
 				preparedStatement.setString(4, correctAnswer);
 				preparedStatement.executeUpdate();
 			} else {
-				System.out.println("Duplicate configuration");
+				System.out.println("Duplicate configuration!! Updating with new values!");
+				preparedStatement = connect.prepareStatement("UPDATE configuration set "
+						+ "`correct_answer`=? WHERE (post_code=? AND set_code=? "
+						+ "AND exam_type=?)");
+				preparedStatement.setString(1, correctAnswer);
+				preparedStatement.setString(2, postCode);
+				preparedStatement.setString(3, setcode);
+				preparedStatement.setString(4, examType);
+				preparedStatement.executeUpdate();
 				return;
+			
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -309,13 +318,16 @@ public class MySQLAccess {	private Connection connect = null;
 			while (resultSet.next()) {
 				ResultDetails resultDetails = new ResultDetails();
 
+				resultDetails.setOmrHeader(resultSet.getString("omr_header"));
 				resultDetails.setRollNo(resultSet.getString("roll_no"));
+				resultDetails.setExamType(resultSet.getString("exam_type"));
 				resultDetails.setSetCode(resultSet.getString("set_code"));
 				resultDetails.setCorrect(resultSet.getInt("correct"));
 				resultDetails.setIncorrect(resultSet.getInt("incorrect"));
 				resultDetails.setMultipleAnswered(resultSet.getInt("multiple_answered"));
 				resultDetails.setUnanswered(resultSet.getInt("unanswered"));
-
+				resultDetails.setGivenAnswer(resultSet.getString("given_answer"));
+				resultDetails.setErrorCode(resultSet.getInt("error_code"));
 				resultDetailsList.add(resultDetails);
 			}
 

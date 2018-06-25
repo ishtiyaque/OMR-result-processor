@@ -2,14 +2,22 @@ import java.util.ArrayList;
 
 public class ResultGenerator {
 	
+	
 	public ResultGenerator() {
+		
 		
 	}
 	
 	public void calculateMarks(ArrayList<String> setCodes) {
 		ArrayList<ResultDetails> resultDetailsList = Configuration.getDao().getResultDetails(setCodes);
 		
+		Processor processor = new Processor();
+		
 		for(ResultDetails resultDetails : resultDetailsList ) {
+			
+			resultDetails = processor.evaluate(resultDetails);
+			Configuration.getDao().updateResultDetails(resultDetails);
+			
 			String rollNo = resultDetails.getRollNo();
 			String setCode = resultDetails.getSetCode();
 			

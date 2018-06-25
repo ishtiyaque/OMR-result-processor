@@ -23,7 +23,7 @@ public class Processor {
 				String line = sc.nextLine();
 				if (line.length() != Configuration.getDesiredlength())
 					continue;
-				ResultDetails result = processSingleLine(line);
+				ResultDetails result = parse(line);
 				if (result == null) {
 					continue;
 				}
