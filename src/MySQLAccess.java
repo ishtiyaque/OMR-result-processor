@@ -262,8 +262,16 @@ public class MySQLAccess {	private Connection connect = null;
 
 	public void detectDuplicates() {
 		try {
+			/************** Duplicate checking with exam type != 0 ********************/
 			preparedStatement = connect.prepareStatement(
-					"UPDATE result_details set `error_code`=? where roll_no in ( select roll_no from(select * from result_details) as m2 group by roll_no having count(roll_no)>1)");
+					"UPDATE result_details set `error_code`=? where exam_type<>'0' and  roll_no in ( select roll_no from(select * from result_details) as m2 where exam_type<>'0' group by roll_no having count(roll_no)>1)");
+			
+			
+			/*****************Duplicate checking without exam type checking*****************
+			 * preparedStatement = connect.prepareStatement(
+		"UPDATE result_details set `error_code`=? where roll_no in ( select roll_no from(select * from result_details) as m2 group by roll_no having count(roll_no)>1)");
+		******************************************************************/
+			
 			preparedStatement.setInt(1, ErrorTypes.DUPLICATE_ROLL);
 			preparedStatement.executeUpdate();
 
