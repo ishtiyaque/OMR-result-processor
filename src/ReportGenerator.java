@@ -42,11 +42,11 @@ public class ReportGenerator {
 		//columnTypes.add(new ReportColumnType("Applicant's Name", "applicant_name", DataTypes.stringType()));
 		//columnTypes.add(new ReportColumnType("Post Code", "post_code", DataTypes.stringType()));
 
-		/*/ ReportGenerator reportGenerator = new ReportGenerator();
-		reportGenerator.buildReport("Absentee List", "SELECT roll_no, applicant_name from selected_list "
-				+ "where roll_no NOT IN (Select roll_no from result_details where exam_type = 1) AND post_code = 200", columnTypes);
-		************/
-		int setCode = 26;
+		//ReportGenerator reportGenerator = new ReportGenerator();
+		/*reportGenerator.buildReport("Absentee List", "SELECT roll_no from selected_list "
+				+ "where roll_no NOT IN (Select roll_no from result_details where exam_type = 1) AND post_code = 290 order by roll_no", columnTypes);
+		*/
+		int setCode = 34;
 		reportGenerator.buildReport("Present List", "SELECT roll_no from result_details where set_code = "+setCode+" order by roll_no", columnTypes);
 		reportGenerator.getPDFReport("Set_"+setCode+"_Present_List.pdf");
 		//reportGenerator.getXLSXReport("Absentee_report.xlsx");

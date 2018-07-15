@@ -62,7 +62,7 @@ public class Processor {
 			result.setErrorCode(ErrorTypes.INVALID_SET_CODE);
 			return result;
 		} else {
-			for (int i = 0; i < result.getGivenAnswer().length(); i++) {
+			for (int i = 0; i < correctAnswer.length(); i++) {
 				if (result.getGivenAnswer().charAt(i) == correctAnswer.charAt(i)) {
 					correct++;
 				} else if (result.getGivenAnswer().charAt(i) == ' ') {

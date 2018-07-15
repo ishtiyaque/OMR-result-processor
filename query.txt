@@ -20,7 +20,7 @@ select roll_no from candidate_info where quota<>"Non Quota")
 select * from candidate_info Left outer join result on candidate_info.roll_no=result.roll_no where candidate_info.post_code=150 
 
 //Notice the set_code and post_code
-select * from selected_list Left outer join (select * from result where set_code = 15) B on selected_list.roll_no=B.roll_no where selected_list.post_code=150
+select * from selected_list Left outer join (select * from result where set_code in(27,28)) B on selected_list.roll_no=B.roll_no where selected_list.post_code=290
 *****************************************************************************************************************************************************************
 --- Query for generating form 2---------------------------------
 

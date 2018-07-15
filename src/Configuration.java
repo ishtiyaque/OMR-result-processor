@@ -4,13 +4,13 @@ import java.util.HashMap;
 import java.util.Scanner;
 
 public class Configuration {
-	private static final String CONF_TXT = "conf_15_16.txt";
+	private static final String CONF_TXT = "conf_35_36_39_41.txt";
 	private static String databaseName;
 	private static String datFileName;
 	private static String postCode;
 	private static String examType;
 	
-	private static final int desiredLength=151;
+	private static final int desiredLength=131;
 
 	private static float corrrectWeight = 1;
 	private static float incorrecWeight = 0;
