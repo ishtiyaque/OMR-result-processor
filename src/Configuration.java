@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Scanner;
 
 public class Configuration {
-	private static final String CONF_TXT = "conf_35_36_39_41.txt";
+	private static final String CONF_TXT = "conf_37_38_40.txt";
 	private static String databaseName;
 	private static String datFileName;
 	private static String postCode;

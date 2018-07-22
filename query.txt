@@ -33,3 +33,24 @@ SELECT count(roll_no) FROM `result` WHERE marks>=21 and roll_no in (select roll_
 SELECT * FROM result_details  where exam_type<>0 and roll_no in ( select roll_no from(select * from result_details) as m2 where exam_type<>0 group by roll_no having count(roll_no)>1)
 ***************************************************************************************************************************************************************
 SELECT * FROM result_details where set_code in (15,16) and roll_no NOT IN (select roll_no from selected_list where post_code in (150,200))
+
+***************************************** Query for generating quota statistics**************************************************************
+SELECT ci.post_code, quota, count(quota), pi.pass_mark 
+from candidate_info ci, result_details r, post_info pi
+where ci.roll_no = r.roll_no AND
+ci.post_code = pi.post_code AND
+r.correct >= pi.pass_mark AND
+r.exam_type = 1
+group by ci.post_code, ci.quota
+***************************************** Query for generating appearance statistics**************************************************************
+select ci.post_code, pi.post_name, count(ci.roll_no) 
+from candidate_info ci, post_info pi, result_details r
+where ci.roll_no = r.roll_no and 
+r.exam_type =1 and 
+ci.post_code = pi.post_code 
+group by ci.post_code
+
+*****************************query for ethnic minority in cleaner (340)*****************************************
+SELECT * from candidate_info,result where candidate_info.roll_no=result.roll_no and candidate_info.post_code=340
+and candidate_info.quota='Ethnic Minority'
+**************************************************
